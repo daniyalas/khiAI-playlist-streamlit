@@ -6,8 +6,8 @@ import json
 keywords = ['nlp', 'ecommerce', 'robotics', 'accounting', 'finance']
 input_counter = 0
 url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'
-nos = ['no', 'na', 'nah', 'n', 'nay']
-yeses = ['yes', 'yup', 'yeah', 'yo', 'ye', 'y']
+nos = ['no', 'na', 'nah', 'n', 'nay'] # keep all lowercase
+yeses = ['yes', 'yup', 'yeah', 'yo', 'ye', 'y'] # keep all lowercase
 
 # ----------------------------------------------- FUNCTIONS
 
@@ -38,12 +38,13 @@ def handle_yesno(yesno):
 def yesno_input():
     global input_counter
     input_counter += 1
-    reply = st.text_input(
+    yesno = st.text_input(
         label = 'Type YES or NO',
         value = '',
         key = 'yesno' + str(input_counter)
         )
-    return reply
+    yesno = yesno.lower()
+    return yesno
 
 def get_yesno():
     yesno = yesno_input()
