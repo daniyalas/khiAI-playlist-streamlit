@@ -30,7 +30,7 @@ The chatbot will carry on the conversation like a normal chat. This also means t
 This section goes over what kind of exceptions I have set in place for various types of User Replies.
 
 ### What if the user's 1st reply is a search term the chatbot is not familiar with?
-Then the user will be asked to input a new search term in a new in a new reply.
+Then the user will be asked to input a new search term in a new reply.
 <img src="https://github.com/daniyalas/khiAI-playlist-streamlit/blob/main/media/incorrect_reply1.png" width="500">
 
 ### What if the user responds the yes/no question with a slang 'yup' or 'nah'?
@@ -44,7 +44,7 @@ Then the user will be asked to input a response to the same question again, but 
 
 
 ## Limitations
-As of 5th March 2021, Input Boxes in StreamLit can not be hid or removed once displayed.
+As of 5th March 2021, Text Input Boxes in StreamLit can not be hid or removed once displayed.
 
 This also means that the user can go back up and edit their previous response.
 
