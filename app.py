@@ -64,10 +64,10 @@ try:
 
             # response = r
             r = fetch_response(url, payload)
-            st.write(r.url) # Uncomment to verify whether correct URL is being sent
+            # st.write(r.url) # Uncomment to verify whether correct URL is being sent
 
             json_data = r.json()
-            json_data # Uncomment to verify whether correct json_data is being received
+            # json_data # Uncomment to verify whether correct json_data is being received
 
             message = r.json()['message']
             results = r.json()['cards']
