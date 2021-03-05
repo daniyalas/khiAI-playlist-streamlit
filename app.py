@@ -3,7 +3,7 @@ import requests
 import json
 
 # ----------------------------------------------- CONFIGURATIONS
-keywords = ['nlp', 'ecommerce', 'robotics', 'accounting']
+keywords = ['nlp', 'ecommerce', 'robotics', 'accounting', 'finance']
 input_counter = 0
 url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'
 nos = ['no', 'na', 'nah', 'n', 'nay']
@@ -11,19 +11,48 @@ yeses = ['yes', 'yup', 'yeah', 'yo', 'ye', 'y']
 
 # ----------------------------------------------- FUNCTIONS
 
-# @st.cache(suppress_st_warning=True) # suppressess the write/markdown warning
-@st.cache
-def fetch_response(url, incoming_message):
-    payload = {
-        "user_id":1, 
-        "bot_id":1, 
-        "module_id":1, 
-        "channel":"Youtube", 
-        "incoming_message":incoming_message,
-        "step_id":1
-        }
-    response = requests.post(url, data = payload)
-    return response
+def handle_incorrect_yesno():
+    st.markdown(
+        '''
+        *Oops!* I don't think I understood that. Let's try again
+
+        Do you want to search for a different kind of playlist, Yes or No?
+        ''')
+    get_yesno()
+
+def handle_yes():
+    st.write('Alright then, what would you like to learn about?')
+    get_search()
+
+def handle_no():
+    st.write('Thanks for chatting then! See you soon :)')
+
+def handle_yesno(yesno):
+    if yesno in nos:
+        handle_no()
+    elif yesno in yeses:
+        handle_yes()
+    else:
+        handle_incorrect_yesno()
+
+def yesno_input():
+    global input_counter
+    input_counter += 1
+    reply = st.text_input(
+        label = 'Type YES or NO',
+        value = '',
+        key = 'yesno' + str(input_counter)
+        )
+    return reply
+
+def get_yesno():
+yesno = yesno_input()
+if bool(yesno) == True:
+    handle_yesno(yesno) 
+
+def verify_continuation():
+    st.markdown('Do you want to search for a different kind of playlist?')
+    get_yesno()
 
 def show_all_results(results):
     for result in results:
@@ -42,45 +71,69 @@ def show_all_results(results):
         if 'google.com/sorry/' in video_url:
             st.write('*Oops!* The video can not be retreived at the moment. Please come back later and try again.')
 
-def handle_correct_reply(reply):
+def handle_correct_search(json_data):
     st.markdown('Perfect! Please wait for your customized playlist to load...')
-    r = fetch_response(url, reply) # 'r' stands for 'response'
-    
-    # # Uncomment for testing only:
-    # r
-    # r.url
-    # r.json()
 
-    json_data = r.json()
-    message = r.json()['message']
-    results = r.json()['cards']
+    message = json_data['message']
+    results = json_data['cards']
 
     st.markdown(f'''### {message}''')
     st.markdown(f'*Number of results: {len(results)}*')
 
     show_all_results(results)
+    verify_continuation()
 
 def search_input():
-    reply = st.text_input(
+    global input_counter
+    input_counter += 1
+    search = st.text_input(
         label = 'Type your search term here',
         value = '',
-        # max_chars = None,
-        key = 'input' + str(input_counter)
-        # type = "default"
+        key = 'search' + str(input_counter)
         )
-    return reply
+    return search
 
-# def handle_search():
+def get_search():
+    search = search_input()
+    if bool(search) == True:
+        handle_search(search) 
 
-def yesno_input():
-    reply = st.text_input(
-        label = 'Type YES or NO',
-        value = '',
-        # max_chars = None,
-        key = 'input' + str(input_counter)
-        # type = "default"
-        )
-    return reply
+def handle_incorrect_search():
+    st.markdown('''
+        *Oops!* It looks like our playlist for this is not ready yet.
+        Try something else perhaps.
+
+        For example: *Ecommerce*, *NLP*, *Robotics*, *Finance* or even *Accounting*.
+        ''')
+    get_search()
+
+# @st.cache(suppress_st_warning=True) # suppressess the write/markdown warning
+@st.cache
+def fetch_response(url, incoming_message):
+    payload = {
+        "user_id":1, 
+        "bot_id":1, 
+        "module_id":1, 
+        "channel":"Youtube", 
+        "incoming_message":incoming_message,
+        "step_id":1
+        }
+    response = requests.post(url, data = payload)
+    return response
+
+def handle_search(search):
+    r = fetch_response(url, search) # 'r' stands for 'response'
+    
+    # Uncomment for testing only:
+    # r
+    # r.url
+    # json_data = r.json()
+    # json_data
+
+    if 'cards' not in r.json():
+        handle_incorrect_search()
+    else:
+        handle_correct_search(r.json())
 
 # ----------------------------------------------- HEADER
 '''
@@ -95,118 +148,15 @@ I can teach you about applications of AI.
 
 Please enter keyword you would like to learn about.
 
-For example: *Ecommerce*, *NLP*, *Robotics* or even *Accounting*.
+For example: *Ecommerce*, *NLP*, *Robotics*, *Finance* or even *Accounting*.
 
 I will create a customized playlist for you.
 '''
 
-try:
-    while True:
-        while True:
-            # reply1 = st.text_input(
-            #     label = 'Type your search term here',
-            #     value = '',
-            #     # max_chars = None,
-            #     key = 'input' + str(input_counter)
-            #     # type = "default"
-            #     )
-            reply1 = search_input()
-
-            if reply1 != '':
-                st.markdown(f'**You:** {reply1}')
-                reply1 = reply1.lower()
-                if reply1 in keywords:
-                    break # escape the current WHILE loop
-
-                st.markdown('''
-                *Oops!* It looks like our playlist for this is not ready yet.
-                Try something else perhaps.
-
-                For example: *Ecommerce*, *NLP* or even *Robotics*.
-                ''')
-                break  # escape the current WHILE loop
-
-        if reply1 not in keywords:
-            input_counter += 1
-            continue # repeat the current WHILE loop
-        else:
-            handle_correct_reply(reply1)
-            
-            st.markdown('Do you want to search for a different kind of playlist?')
-            while True:
-                while True:
-                    # reply2 = st.text_input(
-                    #     label = 'Type YES or NO',
-                    #     value = '',
-                    #     # max_chars = None,
-                    #     key = 'input' + str(input_counter)
-                    #     # type = "default"
-                    #     )
-                    reply2 = yesno_input()
-
-                    if reply2 != '':
-                        st.markdown(f'**You:** {reply2}')
-                        reply2 = reply2.lower()
-                        if reply2 in nos or reply2 in yeses:
-                            break # escape the current While loop
-                        
-                        st.markdown('''
-                        *Oops!* I don't think I quite got that.
-                        Do you want to search for a different kind of playlist, Yes or No?
-                        ''')
-                        input_counter += 1
-                        continue
-                
-                if reply2 in nos:
-                    st.write('Thanks for chatting then! See you soon :)')
-                    break # escape the current While loop
-
-                if reply2 in yeses:
-                    break # escape the current WHILE loop
-            
-            if reply2 in yeses:
-                st.write('Alright then, what would you like to learn about?')
-                input_counter += 1
-                continue # repeat the current WHILE loop
-            
-            break # this ensures that another input box doesn't appear after a 'NO'
-except Exception as err:
-
-    # # Use these to analyse the Error
-    # st.write(type(err))    # the exception instance
-    # st.write(err.args)     # arguments stored in .args
-    # st.write(err)          # __str__ allows args to be printed directly, but may be overridden in exception subclasses
-
-    # A Duplicate Widget ID error is ignorable
-    if type(err) == st.errors.DuplicateWidgetID: 
-        pass
-    else:
-        st.write(err)
+search = st.text_input('Type your search term here', '')
+if bool(search):
+        handle_search(search)
 
 # ----------------------------------------------- FOOTER
 st.markdown('---') # This creates a thin divider
 st.markdown('This streamlit app is developed by [Daniyal A. Syed](https://www.linkedin.com/in/daniyal-as/)')
-
-# ----------------------------------------------- EXTRAS
-
-# # The logic of the following loop was used to create the WHOLE loop of the code
-# input_counter = 1
-# while True:
-#     # main program
-#     while True:
-#         answer = st.text_input(
-#             'Run again? (y/n)',
-#             key= 'input' + str(input_counter)
-#             )
-#         if answer != '':
-#             if answer in ('y', 'n'):
-#                 break
-#             st.text("invalid input.")
-#             input_counter += 1
-#             break
-#     if answer == 'y':
-#         input_counter += 1
-#         continue
-#     if answer == 'n':
-#         st.text("Goodbye")
-#         break
