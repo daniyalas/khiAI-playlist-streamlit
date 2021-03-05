@@ -3,7 +3,7 @@ import requests
 import json
 
 # ----------------------------------------------- CONFIGURATIONS
-keywords = ['nlp', 'ecommerce', 'robotics']
+keywords = ['nlp', 'ecommerce', 'robotics', 'accounting']
 input_counter = 0
 url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'
 nos = ['no', 'na', 'nah', 'n', 'nay']
@@ -95,7 +95,7 @@ I can teach you about applications of AI.
 
 Please enter keyword you would like to learn about.
 
-For example: *Ecommerce*, *NLP* or even *Robotics*.
+For example: *Ecommerce*, *NLP*, *Robotics* or even *Accounting*.
 
 I will create a customized playlist for you.
 '''
