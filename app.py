@@ -46,9 +46,9 @@ def yesno_input():
     return reply
 
 def get_yesno():
-yesno = yesno_input()
-if bool(yesno) == True:
-    handle_yesno(yesno) 
+    yesno = yesno_input()
+    if bool(yesno) == True:
+        handle_yesno(yesno) 
 
 def verify_continuation():
     st.markdown('Do you want to search for a different kind of playlist?')
