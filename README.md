@@ -7,7 +7,8 @@ I created this simple chatbot for Karachi.AI as per their request.
 To check out the chatbot yourself, click [here][link_to_app].
 
 
-## Hanlding Exceptions
+
+## Handling Exceptions
 
 
 ## Limitations
@@ -15,5 +16,6 @@ To check out the chatbot yourself, click [here][link_to_app].
 
 ## Demo
 
+![demo](media/demo.mp4)
 
 [link_to_app]: https://share.streamlit.io/daniyalas/khiai-playlist-streamlit/main/app.py
