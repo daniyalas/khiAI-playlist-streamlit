@@ -36,6 +36,7 @@ try:
                 )
 
             if reply != '':
+                st.markdown(f'**You:** {reply}')
                 reply = reply.lower()
                 if reply in keywords:
                     break # escape the current WHILE loop
@@ -49,7 +50,7 @@ try:
         else:
         # Main program that runs when we get our desired input
 
-            st.markdown('Perfect! Please wait for your customized playlist to load.')
+            st.markdown('Perfect! Please wait for your customized playlist to load...')
 
             url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'            
             payload = {
@@ -63,10 +64,10 @@ try:
 
             # response = r
             r = fetch_response(url, payload)
-            # st.write(r.url) # Uncomment to verify whether correct URL is being sent
+            st.write(r.url) # Uncomment to verify whether correct URL is being sent
 
             json_data = r.json()
-            # json_data # Uncomment to verify whether correct json_data is being received
+            json_data # Uncomment to verify whether correct json_data is being received
 
             message = r.json()['message']
             results = r.json()['cards']
@@ -103,10 +104,10 @@ try:
                         key = 'input' + str(input_counter)
                         # type = "default"
                         )
-                    # reply2 = get_input('Type YES or NO', input_counter)
-                    reply2 = reply2.lower()
 
                     if reply2 != '':
+                        st.markdown(f'**You:** {reply2}')
+                        reply2 = reply2.lower()
                         if reply2 in nos or reply2 in yeses:
                             break # escape the current While loop
                         
