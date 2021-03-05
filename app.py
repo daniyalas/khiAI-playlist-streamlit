@@ -1,7 +1,15 @@
 import streamlit as st
 import requests
 import json
-from streamlit.script_runner import RerunException
+
+# ----------------------------------------------- CONFIGURATIONS
+keywords = ['nlp', 'ecommerce', 'robotics']
+input_counter = 0
+url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'
+nos = ['no', 'na', 'nah', 'n', 'nay']
+yeses = ['yes', 'yup', 'yeah', 'yo', 'ye', 'y']
+
+# ----------------------------------------------- FUNCTIONS
 
 # @st.cache(suppress_st_warning=True) # suppressess the write/markdown warning
 @st.cache
@@ -34,10 +42,8 @@ def show_all_results(results):
         if 'google.com/sorry/' in video_url:
             st.write('*Oops!* The video can not be retreived at the moment. Please come back later and try again.')
 
-# Main function that runs when we get our desired input
 def handle_correct_reply(reply):
     st.markdown('Perfect! Please wait for your customized playlist to load...')
-
     r = fetch_response(url, reply) # 'r' stands for 'response'
     
     # # Uncomment for testing only:
@@ -54,19 +60,35 @@ def handle_correct_reply(reply):
 
     show_all_results(results)
 
+def search_input():
+    reply = st.text_input(
+        label = 'Type your search term here',
+        value = '',
+        # max_chars = None,
+        key = 'input' + str(input_counter)
+        # type = "default"
+        )
+    return reply
 
-# --- CONFIGURATIONS
-keywords = ['nlp', 'ecommerce', 'robotics']
-input_counter = 0
-url = 'https://mhemani-youtube-bot.herokuapp.com/api_youtube/'
-nos = ['no', 'na', 'nah', 'n', 'nay']
-yeses = ['yes', 'yup', 'yeah', 'yo', 'ye', 'y']
+# def handle_search():
 
-# ---
+def yesno_input():
+    reply = st.text_input(
+        label = 'Type YES or NO',
+        value = '',
+        # max_chars = None,
+        key = 'input' + str(input_counter)
+        # type = "default"
+        )
+    return reply
 
-st.title('Karachi.AI Tutor Chatbot')
+# ----------------------------------------------- HEADER
+'''
+[github_badge]: https://badgen.net/badge/icon/GitHub?icon=github&color=black&label
+[github_link]: https://github.com/daniyalas/khiAI-playlist-streamlit
 
-st.markdown('''
+# Karachi.AI Tutor Chatbot [![GitHub][github_badge]][github_link]
+
 Hi, I am AIZA - your personal AI Tutor. 
 
 I can teach you about applications of AI.
@@ -76,18 +98,19 @@ Please enter keyword you would like to learn about.
 For example: *Ecommerce*, *NLP* or even *Robotics*.
 
 I will create a customized playlist for you.
-''')
+'''
 
 try:
     while True:
         while True:
-            reply1 = st.text_input(
-                label = 'Type your search term here',
-                value = '',
-                # max_chars = None,
-                key = 'input' + str(input_counter)
-                # type = "default"
-                )
+            # reply1 = st.text_input(
+            #     label = 'Type your search term here',
+            #     value = '',
+            #     # max_chars = None,
+            #     key = 'input' + str(input_counter)
+            #     # type = "default"
+            #     )
+            reply1 = search_input()
 
             if reply1 != '':
                 st.markdown(f'**You:** {reply1}')
@@ -96,7 +119,8 @@ try:
                     break # escape the current WHILE loop
 
                 st.markdown('''
-                *Oops!* It looks like our playlist for this is not ready yet. Try something else perhaps.
+                *Oops!* It looks like our playlist for this is not ready yet.
+                Try something else perhaps.
 
                 For example: *Ecommerce*, *NLP* or even *Robotics*.
                 ''')
@@ -109,16 +133,16 @@ try:
             handle_correct_reply(reply1)
             
             st.markdown('Do you want to search for a different kind of playlist?')
-
             while True:
                 while True:
-                    reply2 = st.text_input(
-                        label = 'Type YES or NO',
-                        value = '',
-                        # max_chars = None,
-                        key = 'input' + str(input_counter)
-                        # type = "default"
-                        )
+                    # reply2 = st.text_input(
+                    #     label = 'Type YES or NO',
+                    #     value = '',
+                    #     # max_chars = None,
+                    #     key = 'input' + str(input_counter)
+                    #     # type = "default"
+                    #     )
+                    reply2 = yesno_input()
 
                     if reply2 != '':
                         st.markdown(f'**You:** {reply2}')
@@ -126,7 +150,10 @@ try:
                         if reply2 in nos or reply2 in yeses:
                             break # escape the current While loop
                         
-                        st.markdown('''*Oops!* I don't think I quite got that. Do you want to search for a different kind of playlist, Yes or No?''')
+                        st.markdown('''
+                        *Oops!* I don't think I quite got that.
+                        Do you want to search for a different kind of playlist, Yes or No?
+                        ''')
                         input_counter += 1
                         continue
                 
@@ -156,11 +183,13 @@ except Exception as err:
     else:
         st.write(err)
 
-# Footer
+# ----------------------------------------------- FOOTER
 st.markdown('---') # This creates a thin divider
 st.markdown('This streamlit app is developed by [Daniyal A. Syed](https://www.linkedin.com/in/daniyal-as/)')
 
-# The logic of the following loop was used to create the WHOLE loop of the code
+# ----------------------------------------------- EXTRAS
+
+# # The logic of the following loop was used to create the WHOLE loop of the code
 # input_counter = 1
 # while True:
 #     # main program
