@@ -16,11 +16,15 @@ In this example, it has sent you an AI Playlist relevant to your search term:
 <img src="https://github.com/daniyalas/khiAI-playlist-streamlit/blob/main/media/appropriate_reply1.png" width="500">
 
 Over here, the chatbot is acknowledging your positive response.
+
 <img src="https://github.com/daniyalas/khiAI-playlist-streamlit/blob/main/media/reply2_yes.png" width="500">
+
 
 ### Carries the Conversation
 The chatbot will carry on the conversation like a normal chat. This also means that everytime the bot responds, there will be a new input box to type your reply; no need to type in the same box again and again.
+
 <img src="https://github.com/daniyalas/khiAI-playlist-streamlit/blob/main/media/convo_carry.png" width="500">
+
 
 ## Handling Exceptions
 This section goes over what kind of exceptions I have set in place for various types of User Replies.
