@@ -3,7 +3,9 @@ I created this simple chatbot for Karachi.AI as per their request. Their request
 
 
 ## Overview
-The chatbot uses Karachi.AI's chatbot API to fetch video playlist results and present them to the user. Click [here][https://mhemani-youtube-bot.herokuapp.com/docs#/default/reply_user_api_youtube__post] to check out the API documenatation.
+The chatbot uses Karachi.AI's chatbot API to fetch video playlist results and present them to the user. Click [here][link_to_API_docs] to check out the API documenatation.
+
+
 
 To check out the chatbot yourself, click [here][link_to_app].
 
@@ -34,6 +36,7 @@ This section goes over what kind of exceptions I have set in place for various t
 
 ### What if the user's 1st reply is a search term the chatbot is not familiar with?
 Then the user will be asked to input a new search term in a new reply.
+
 <img src="https://github.com/daniyalas/khiAI-playlist-streamlit/blob/main/media/incorrect_reply1.png" width="500">
 
 ### What if the user responds the yes/no question with a slang 'yup' or 'nah'?
@@ -53,4 +56,5 @@ This also means that the user can go back up and edit their previous response.
 
 Because of this limitation in StreamLit, it may not be the best idea to create a Chatbot using it. At least not at the moment.
 
+[link_to_API_docs]: https://mhemani-youtube-bot.herokuapp.com/docs#/default/reply_user_api_youtube__post
 [link_to_app]: https://share.streamlit.io/daniyalas/khiai-playlist-streamlit/main/app.py
