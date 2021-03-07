@@ -3,9 +3,7 @@ I created this simple chatbot for Karachi.AI as per their request. Their request
 
 
 ## Overview
-The chatbot uses Karachi.AI's chatbot API to fetch video playlist results and present them to the user. Click [here][link_to_API_docs] to check out the API documenatation.
-
-
+The chatbot uses Karachi.AI's chatbot API to fetch video playlist results and present them to the user. Click [here][link_to_API_docs] to check out the API documentation.
 
 To check out the chatbot yourself, click [here][link_to_app].
 
