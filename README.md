@@ -3,7 +3,10 @@ I created this simple chatbot for Karachi.AI as per their request. Their request
 
 
 ## Overview
+The chatbot uses Karachi.AI's chatbot API to fetch video playlist results and present them to the user. Click [here][https://mhemani-youtube-bot.herokuapp.com/docs#/default/reply_user_api_youtube__post] to check out the API documenatation.
+
 To check out the chatbot yourself, click [here][link_to_app].
+
 
 ### First Look
 When you open the app on your desktop device, this is what you would see:
